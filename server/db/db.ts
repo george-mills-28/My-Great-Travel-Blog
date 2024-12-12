@@ -1,4 +1,4 @@
-import connection from './connection.js'
+import connection from './connection.ts'
 import { Knex } from 'knex'
 
 interface Entry {
