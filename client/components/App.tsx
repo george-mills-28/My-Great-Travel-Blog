@@ -1,15 +1,16 @@
-import { useFruits } from '../hooks/useFruits.ts'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import EntryList from './EntryList'
+
+const queryClient = new QueryClient()
 
 function App() {
-  const { data } = useFruits()
-
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <div className="app">
-        <h1>Fullstack Boilerplate - with Fruits!</h1>
-        <ul>{data && data.map((fruit) => <li key={fruit}>{fruit}</li>)}</ul>
+        <h1>My Travel Journal</h1>
+        <EntryList />
       </div>
-    </>
+    </QueryClientProvider>
   )
 }
 
