@@ -6,8 +6,11 @@ export default function useEntriesData(id: number) {
   return useQuery({
     queryKey: ['entries', id],
     queryFn: async () => {
-      const res = await request.get(`/api/v1/entries/${id}`)
-      return res.body as Entry
+      const res = await request.get(`/api/v1/entries/${id}`);
+    if (res.ok) {
+    return res.body as Entry
+    }
+    throw new Error(res.text)  
     },
   })
 }

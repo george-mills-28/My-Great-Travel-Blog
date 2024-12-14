@@ -61,7 +61,7 @@ export default function EditEntryForm({
         <input
           type="text"
           id="location"
-          name="location"
+          name="location_name"
           value={formData.location_name}
           onChange={handleChange}
         />
