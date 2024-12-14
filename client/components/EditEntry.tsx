@@ -8,18 +8,18 @@ import useDeleteEntry from '../hooks/useDeleteEntry.ts';
 export default function EditEntry() {
   const params = useParams()
   const id = Number(params.id)
-  const contact = useContactData(id)
-  const editContact = useEditContact(id)
+  const entry = useEntriesData(id)
+  const editEntry = useEditEntry(id)
   const navigate = useNavigate()
   const deleteEntry = useDeleteEntry(id);
 
-  const handleSubmit = async (data: ContactData) => {
+  const handleSubmit = async (data: Entry) => {
     try {
-      await editContact.mutateAsync({ id, ...data })
-      console.log('Contact updated successfully')
-      navigate('/contacts/')
+      await editEntry.mutateAsync({...data })
+      console.log('Entry updated successfully')
+      navigate('/entries/')
     } catch (error) {
-      console.error('Error updating contact:', error)
+      console.error('Error updating entry:', error)
     }
   }
   const handleDelete = async () => {
@@ -34,23 +34,23 @@ export default function EditEntry() {
     }
   };
 
-  if (contact.isLoading) {
-    return <LoadingIndicator />
+  if (entry.isLoading) {
+    return <p>Loading..</p>
   }
 
-  if (contact.isError || !contact.data) {
-    return <p>Failed to load contact data. Please try again later.</p>
+  if (entry.isError || !entry.data) {
+    return <p>Failed to load entry data. Please try again later.</p>
   }
 
   return (
     <>
-      <MainNav />
+    
       <h2>
-        Edit Contact: <span className="data">{contact.data.name}</span>
+        Edit Entry: <span className="data">{entry.data.location_name}</span>
       </h2>
-      <EditContactForm
-        {...contact.data}
-        submitLabel="Update Contact"
+      <EditEntryForm
+        {...entry.data}
+        submitLabel="Update Entry"
         onSubmit={handleSubmit}
       />
       <button onClick={handleDelete} className='delete-button'>
