@@ -90,7 +90,7 @@ export default function EditEntryForm({
           onChange={handleChange}
         />
       </div>
-      <button type="submit">{submitLabel}</button>
+      <button type="submit">{submitLabel} Submit</button>
     </form>
   )
 }

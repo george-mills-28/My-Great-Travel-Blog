@@ -8,10 +8,22 @@ export async function getAllEntries() {
   return response.body
 } 
 
+export async function getEntryById(id: number){
+  const response = await request.get(`/api/v1/entries/${id}`)
+  return response.body as Entry
+}
+
 export async function addNewEntry(newEntry: Entry) {
   const res =  await request.post('/api/v1/entries').send(newEntry)
   return res.body
  
+}
+
+export async function updateEntry(id: number, values: Entry): Promise<void> {
+  const res = await request.patch(`/api/v1/entries/${id}`).send(values);
+  if (!res.ok) {
+    throw new Error(res.text) // Handle API errors
+  }
 }
 
 export async function deleteEntry(id: number) {
