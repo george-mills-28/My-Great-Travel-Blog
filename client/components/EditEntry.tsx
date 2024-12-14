@@ -9,17 +9,17 @@ export default function EditEntry() {
   const params = useParams()
   const id = Number(params.id)
   const entry = useEntriesData(id)
-  const editEntry= useEditEntry(id)
+  const editEntry = useEditEntry(id)
   const navigate = useNavigate()
   const deleteEntry = useDeleteEntry(id);
 
   const handleSubmit = async (data: Entry) => {
     try {
-      await editEntry.mutateAsync({ id, ...data })
-      console.log('Contact updated successfully')
-      navigate('/')
+      await editEntry.mutateAsync({...data })
+      console.log('Entry updated successfully')
+      navigate('/entries/')
     } catch (error) {
-      console.error('Error updating contact:', error)
+      console.error('Error updating entry:', error)
     }
   }
   const handleDelete = async () => {
@@ -35,15 +35,16 @@ export default function EditEntry() {
   };
 
   if (entry.isLoading) {
-    return <LoadingIndicator />
+    return <p>Loading..</p>
   }
 
   if (entry.isError || !entry.data) {
-    return <p>Failed to load contact data. Please try again later.</p>
+    return <p>Failed to load entry data. Please try again later.</p>
   }
 
   return (
     <>
+    
       <h2>
         Edit Entry: <span className="data">{entry.data.location_name}</span>
       </h2>
