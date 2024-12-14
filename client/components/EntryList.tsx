@@ -1,13 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { getAllEntries } from '../apis/entries'
+import { Entry } from '../../models/entries'
 
-interface Entry {
-  id: number
-  date: string
-  location_name: string
-  details: string
-  image_url: string | null
-}
 
 export default function EntryList() {
   const {
@@ -15,6 +9,8 @@ export default function EntryList() {
     error,
     isLoading,
   } = useQuery<Entry[]>({ queryKey: ['entries'], queryFn: getAllEntries })
+
+
 
   if (error) {
     return <p>Failed to load entries</p>
@@ -30,12 +26,13 @@ export default function EntryList() {
       <div className="entries-grid">
         {entries?.map((entry) => (
           <div key={entry.id} className="entry-card">
-            <h3>{entry.location_name}</h3>
-            <p className="date">{new Date(entry.date).toLocaleDateString()}</p>
-            <p>{entry.details}</p>
+            <h3>Location: {entry.location_name}</h3>
+            <p className="date">Date: {new Date(entry.date).toLocaleDateString()}</p>
+            <p>Details: {entry.details}</p>
             {entry.image_url && (
               <img src={entry.image_url} alt={entry.location_name} />
             )}
+          
           </div>
         ))}
       </div>
