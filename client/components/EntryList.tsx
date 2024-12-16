@@ -1,9 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { deleteEntry, getAllEntries } from '../apis/entries'
 import { Entry } from '../../models/entries'
-
+import { useNavigate } from 'react-router-dom'
 
 export default function EntryList() {
+  const navigate = useNavigate()
   const {
     data: entries,
     error,
@@ -15,7 +16,6 @@ export default function EntryList() {
   const deleteMutation = useMutation({
     mutationFn: deleteEntry,
     onSuccess: () => {
-      
       queryClient.invalidateQueries({ queryKey: ['entries'] });
     }
   })
@@ -24,6 +24,9 @@ export default function EntryList() {
     deleteMutation.mutate(id);
   }
 
+  const handleEdit = (id: number) => {
+    navigate(`/entries/edit/${id}`)
+  }
 
   if (error) {
     return <p>Failed to load entries</p>
@@ -45,12 +48,23 @@ export default function EntryList() {
             {entry.image_url && (
               <img src={entry.image_url} alt={entry.location_name} />
             )}
-          <button className="delete-button" onClick={() => handleDelete(entry.id)}>
+            <div className="button-container">
+              <button 
+                className="edit-button" 
+                onClick={() => handleEdit(entry.id)}
+              >
+                Edit Entry
+              </button>
+              <button 
+                className="delete-button" 
+                onClick={() => handleDelete(entry.id)}
+              >
                 Delete Entry
               </button>
+            </div>
           </div>
         ))}
       </div>
     </div>
   )
-} 
+}
