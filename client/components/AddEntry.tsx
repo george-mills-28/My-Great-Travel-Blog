@@ -48,7 +48,7 @@ return ( <form onSubmit={handleSubmit}>
         onChange={handleChange}
       />
 
-  <button type="submit">Add Entry</button>
+  <button className="add-button" type="submit">Add Entry</button>
   </form>
   );
 }
