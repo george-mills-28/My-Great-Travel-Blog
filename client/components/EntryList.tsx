@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query'
-import { getAllEntries } from '../apis/entries'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { deleteEntry, getAllEntries } from '../apis/entries'
 import { Entry } from '../../models/entries'
 
 
@@ -10,6 +10,19 @@ export default function EntryList() {
     isLoading,
   } = useQuery<Entry[]>({ queryKey: ['entries'], queryFn: getAllEntries })
 
+  const queryClient = useQueryClient()
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteEntry,
+    onSuccess: () => {
+      
+      queryClient.invalidateQueries({ queryKey: ['entries'] });
+    }
+  })
+
+  const handleDelete = (id: number) => {
+    deleteMutation.mutate(id);
+  }
 
 
   if (error) {
@@ -32,7 +45,9 @@ export default function EntryList() {
             {entry.image_url && (
               <img src={entry.image_url} alt={entry.location_name} />
             )}
-          
+          <button className="delete-button" onClick={() => handleDelete(entry.id)}>
+                Delete Entry
+              </button>
           </div>
         ))}
       </div>
