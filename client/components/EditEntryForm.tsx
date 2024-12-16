@@ -1,7 +1,5 @@
 import { useState, FormEvent } from 'react'
 import { Entry } from '../../models/entries.ts'
-import useEntries from '../hooks/useEntries.ts'
-
 
 interface Props extends Entry {
   submitLabel: string
@@ -13,12 +11,10 @@ export default function EditEntryForm({
   onSubmit,
   ...initialData
 }: Props) {
-  const entries = useEntries()
   const [formData, setFormData] = useState<Entry>(initialData)
 
-
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target
     setFormData((prev) => ({
@@ -31,30 +27,23 @@ export default function EditEntryForm({
     evt.preventDefault()
     onSubmit(formData)
   }
-  if (entries.isPending) {
-    return 'Loading...'
-  }
-
-  if (entries.isError || !entries.data) {
-    return 'Failed to load entries'
-  }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
+    <form onSubmit={handleSubmit} className="edit-form">
+      <div className="form-group">
         <label htmlFor="date" className="label">
           Date:
         </label>
         <input
-          type="text"
+          type="date"
           id="date"
           name="date"
           value={formData.date}
           onChange={handleChange}
-    
+          className="form-input"
         />
       </div>
-      <div>
+      <div className="form-group">
         <label htmlFor="location_name" className="label">
           Location:
         </label>
@@ -64,22 +53,23 @@ export default function EditEntryForm({
           name="location_name"
           value={formData.location_name}
           onChange={handleChange}
+          className="form-input"
         />
       </div>
-      <div>
+      <div className="form-group">
         <label htmlFor="details" className="label">
           Details:
         </label>
-        <input
-          type="details"
+        <textarea
           id="details"
           name="details"
           value={formData.details}
           onChange={handleChange}
+          className="form-input"
         />
       </div>
-      <div>
-      <label htmlFor="image_url" className="label">
+      <div className="form-group">
+        <label htmlFor="image_url" className="label">
           Image URL:
         </label>
         <input
@@ -88,9 +78,10 @@ export default function EditEntryForm({
           name="image_url"
           value={formData.image_url || ""}
           onChange={handleChange}
+          className="form-input"
         />
       </div>
-      <button type="submit">{submitLabel} Submit</button>
+      <button type="submit" className="submit-button">{submitLabel}</button>
     </form>
   )
 }

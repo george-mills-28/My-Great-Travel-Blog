@@ -17,11 +17,12 @@ export default function EditEntry() {
     try {
       await editEntry.mutateAsync({...data })
       console.log('Entry updated successfully')
-      navigate('/entries/')
+      navigate('/') // Changed from '/entries/' to '/'
     } catch (error) {
       console.error('Error updating entry:', error)
     }
   }
+
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this entry?')) {
       try {
@@ -43,19 +44,18 @@ export default function EditEntry() {
   }
 
   return (
-    <>
-    
+    <div className="edit-entry-container">
       <h2>
         Edit Entry: <span className="data">{entry.data.location_name}</span>
       </h2>
       <EditEntryForm
         {...entry.data}
-        submitLabel="Update Entry"
+        submitLabel="Update"
         onSubmit={handleSubmit}
       />
       <button onClick={handleDelete} className='delete-button'>
         Delete entry
       </button>
-    </>
+    </div>
   )
 }
