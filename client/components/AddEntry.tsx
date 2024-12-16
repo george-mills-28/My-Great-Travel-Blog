@@ -28,28 +28,64 @@ const AddEntry = () => {
     });
   };
 
-return ( <form onSubmit={handleSubmit}>
-  <label htmlFor="date">Date</label>
-  <input id="date" type="date" name="date" value={entry.date} onChange={handleChange} required />
+  return (
+    <div className="add-entry-section">
+      <h2 className="add-entry-title">Add New Entry</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="date">Date</label>
+          <input 
+            id="date" 
+            type="date" 
+            name="date" 
+            value={entry.date} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
 
-  <label htmlFor="location_name">Location</label>
-  <input id="location_name" type="text" name="location_name" placeholder="Location name" value={entry.location_name} onChange={handleChange} required />
+        <div className="form-group">
+          <label htmlFor="location_name">Location</label>
+          <input 
+            id="location_name" 
+            type="text" 
+            name="location_name" 
+            placeholder="Enter location name" 
+            value={entry.location_name} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
 
-  <label htmlFor="details">Details</label>
-  <textarea id="details" name="details" placeholder="Details of your travels" value={entry.details} onChange={handleChange} required />
+        <div className="form-group">
+          <label htmlFor="details">Details</label>
+          <textarea 
+            id="details" 
+            name="details" 
+            placeholder="Share your travel experience..." 
+            value={entry.details} 
+            onChange={handleChange} 
+            required 
+          />
+        </div>
 
-  <label htmlFor="image_url">Image URL</label>
-      <input
-        id="image_url"
-        type="text"
-        name="image_url"
-        placeholder="Image URL (optional)"
-        value={entry.image_url}
-        onChange={handleChange}
-      />
+        <div className="form-group">
+          <label htmlFor="image_url">Image URL</label>
+          <input
+            id="image_url"
+            type="text"
+            name="image_url"
+            placeholder="Add an image URL (optional)"
+            value={entry.image_url}
+            onChange={handleChange}
+          />
+        </div>
 
-  <button className="add-button" type="submit">Add Entry</button>
-  </form>
+        <button className="add-button" type="submit">
+          Add Entry
+        </button>
+      </form>
+    </div>
   );
 }
 
